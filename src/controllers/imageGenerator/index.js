@@ -18,9 +18,11 @@ async function getImagesPage(page, isRetry) {
   try {
     const result = await axios.get(ENDPOINTS.GENERATE_IMAGES, { params: { key, page, per_page }});
     const { hits = [] } = result?.data || {};
-    imageCache.set(page, hits);
+    const urls = hits.map(hit => hit.largeImageURL || hit.webformatURL);
 
-    return hits;
+    imageCache.set(page, urls);
+
+    return urls;
   } catch (e) {
     const { status } = e;
 
