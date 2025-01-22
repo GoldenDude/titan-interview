@@ -24,6 +24,15 @@ class TimeLimitedCacheService {
     const timeout = setTimeout(() => this.cache.delete(key), this.entryExpiration);
     this.cache.set(key, { value, timeout });
   }
+
+  reset() {
+    this.cache.forEach(entry => {
+      const { timeout } = entry;
+      clearTimeout(timeout);
+    });
+
+    this.cache.clear();
+  }
 }
 
 module.exports = TimeLimitedCacheService;

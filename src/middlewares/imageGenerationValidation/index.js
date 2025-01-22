@@ -2,7 +2,7 @@ const CONFIG = require('./config');
 const { DEFAULT_AMOUNT, MAX_RETURNED_IMAGES, ERRORS } = CONFIG;
 
 function isInValidRange(amountOfImages) {
-  return amountOfImages >= 0 && amountOfImages > MAX_RETURNED_IMAGES;
+  return amountOfImages >= 0 && amountOfImages <= MAX_RETURNED_IMAGES;
 }
 
 function amountOfImagesValidation(req, res, next) {

@@ -53,6 +53,17 @@ async function generateImages(amountOfImages) {
   return images.slice(0, amountOfImages);
 }
 
+async function loadImageCache() {
+  await generateImages(CONFIG.MAX_IMAGES);
+}
+
+async function initializeCacheMechanism() {
+  loadImageCache();
+  setInterval(loadImageCache, CONFIG.PAGE_TTL);
+}
+
+initializeCacheMechanism();
+
 module.exports = {
   generateImages,
 };

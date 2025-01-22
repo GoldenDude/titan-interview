@@ -1,7 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const imageGeneratorCtrl = require('../controllers/imageGenerator');
 const { amountOfImagesValidation } = require('../middlewares/imageGenerationValidation');
+const router = express.Router();
 
 router.get('/', amountOfImagesValidation, async (req, res) => {
   try {

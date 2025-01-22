@@ -1,4 +1,5 @@
 const CONFIG = {
+  MAX_IMAGES: 500,
   MAX_ASYNC_CALLS: 5,
   PAGE_MAX_IMAGES: 100,
   PAGE_TTL: 1000 * 60 * 60 * 24, // 24 hours in MS

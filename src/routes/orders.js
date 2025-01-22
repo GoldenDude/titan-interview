@@ -1,7 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const ordersCtrl = require('../controllers/orders');
 const { userValidation, orderValidation } = require('../middlewares/orderValidation');
+const router = express.Router();
 
 router.get('/getOrdersByUser', userValidation, async (req, res) => {
   try {
