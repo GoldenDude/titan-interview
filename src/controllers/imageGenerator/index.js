@@ -1,14 +1,15 @@
 const { default: axios } = require('axios');
 
 const CONFIG = require('./config');
+const UTILS = require('../../services/utils');
 const { PIXABAY_API_KEY: key } = require('../../config');
 const { handlePromiseBatch_SAFE } = require('../../services/promiseUtils');
-const TimeLimitedCacheService = require('../../services/imageCacheService');
+const TimeLimitedCacheService = require('../../services/timeLimitedCacheService');
 
 const { ENDPOINTS } = CONFIG;
 const imageCache = new TimeLimitedCacheService(CONFIG.PAGE_TTL);
 
-async function getImagesPage(page) {
+async function getImagesPage(page, isRetry) {
   const { PAGE_MAX_IMAGES: per_page } = CONFIG;
   const cachedPage = imageCache.get(page);
 
@@ -21,6 +22,13 @@ async function getImagesPage(page) {
 
     return hits;
   } catch (e) {
+    const { status } = e;
+
+    if (status === CONFIG.TOO_MANY_REQUESTS_STATUS_CODE && !isRetry) {
+      await UTILS.sleep(CONFIG.TIME_BETWEEN_RETRIES);
+      return getImagesPage(page, true);
+    }
+
     console.error(e); // or any other logging service
     return [];
   }
