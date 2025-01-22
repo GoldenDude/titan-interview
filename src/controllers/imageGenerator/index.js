@@ -3,11 +3,11 @@ const { default: axios } = require('axios');
 const CONFIG = require('./config');
 const UTILS = require('../../services/utils');
 const { PIXABAY_API_KEY: key } = require('../../config');
+const TimeLimitedCache = require('../../services/timeLimitedCache');
 const { handlePromiseBatch_SAFE } = require('../../services/promiseUtils');
-const TimeLimitedCacheService = require('../../services/timeLimitedCacheService');
 
 const { ENDPOINTS } = CONFIG;
-const imageCache = new TimeLimitedCacheService(CONFIG.PAGE_TTL);
+const imageCache = new TimeLimitedCache(CONFIG.PAGE_TTL);
 
 async function getImagesPage(page, isRetry) {
   const { PAGE_MAX_IMAGES: per_page } = CONFIG;
